@@ -30,6 +30,14 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="OsmSharp.Logistics, Version=0.0.1.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.Logistics.0.0.1.32-beta\lib\net45\OsmSharp.Logistics.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="OsmSharp.Logistics.Routing, Version=0.0.1.32, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\OsmSharp.Logistics.0.0.1.32-beta\lib\net45\OsmSharp.Logistics.Routing.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -48,6 +56,9 @@
     <Compile Include="Point.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Triangle.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,11 +1,5 @@
 ﻿using Clustering.Algorithms;
 using Geometry;
-using OsmSharp.Math.TSP;
-using OsmSharp.Math.TSP.EdgeAssemblyGenetic;
-using OsmSharp.Math.TSP.Genetic.Solver.Operations.CrossOver;
-using OsmSharp.Math.TSP.Genetic.Solver.Operations.Generation;
-using OsmSharp.Math.TSP.Problems;
-using OsmSharp.Math.VRP.Core.Routes;
 using SpeedTest;
 using System;
 using System.Collections.Generic;
@@ -15,6 +9,11 @@ using System.Threading.Tasks;
 //using TSP;
 using CostFunction;
 using Clustering;
+using OsmSharp.Logistics.Routes;
+using OsmSharp.Logistics.Solutions.TSP.GA.EAX;
+using OsmSharp.Logistics.Solvers.GA;
+using OsmSharp.Logistics.Solutions.TSP;
+using OsmSharp.Logistics.Solvers;
 
 namespace WindowsFormsApplication1
 {
@@ -74,11 +73,15 @@ namespace WindowsFormsApplication1
         private LargeATSPPreClustering<TNode> dirk3 = new LargeATSPPreClustering<TNode>();
         
         //private LinKernighan<TNode> lkh = new LinKernighan<TNode>();
-        private ISolver eax = new EdgeAssemblyCrossOverSolver(300, 100,
-                          new _3OptGenerationOperation(),
-                          new EdgeAssemblyCrossover(30,
-                                 EdgeAssemblyCrossover.EdgeAssemblyCrossoverSelectionStrategyEnum.SingleRandom,
-                                 true));
+        private ISolver<ITSP, IRoute> eax = new EAXSolver(new GASettings()
+            {
+                CrossOverPercentage = 10,
+                ElitismPercentage = 1,
+                PopulationSize = 100,
+                MaxGenerations = 100000,
+                MutationPercentage = 0,
+                StagnationCount = 100
+            });
         //private NearestNeighbor<TNode> nearestNeighbor = new NearestNeighbor<TNode>();
         //private OneLoopCheapestInsertion<TNode> oneLoopCheapestInsertion = new OneLoopCheapestInsertion<TNode>();
         //private RandomArbitraryInsertion<TNode> randomArbitraryInsertion = new RandomArbitraryInsertion<TNode>();
@@ -112,7 +115,7 @@ namespace WindowsFormsApplication1
                     //    result = lkh.Solve(Nodes, costAnalyzer);
                     //    break;
                     case TSPAlgorithm.EAX:
-                        var problem = MatrixProblem.CreateATSP(costMatrix.Matrix);
+                        var problem = new TSPProblem(0, costMatrix.Matrix);
                         LastRoute = eax.Solve(problem);
                         break;
                     //case TSPAlgorithm.NN:
