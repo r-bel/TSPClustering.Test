@@ -37,7 +37,7 @@ namespace WindowsFormsApplication1
 {
     public partial class MainForm : Form
     {
-        const string dropboxlocation = @"D:\";
+        const string dropboxlocation = @"C:\temp\clustering";
 
         AxisAlignedRectangle boundingRectangle;
         TransformationMatrix matrix;
@@ -150,7 +150,7 @@ namespace WindowsFormsApplication1
 
             if (radioButton1.Checked)
             {
-                coordinates = LoadCSV_Coordinates(Path.Combine(dropboxlocation, @"Dropbox\SharedDevelopment\_External\TSP Problem instances\10001.csv"));
+                coordinates = LoadCSV_Coordinates(Path.Combine(dropboxlocation, @"10001.csv"));
             }
             else if (radioButton2.Checked)
             {
@@ -159,7 +159,7 @@ namespace WindowsFormsApplication1
 
             if (radioButton4.Checked)
             {
-                costs = LoadCSV_Costs(Path.Combine(dropboxlocation, @"Dropbox\SharedDevelopment\_External\TSP Problem instances\dump.csv"), coordinates.Count);
+                costs = LoadCSV_Costs(Path.Combine(dropboxlocation, @"dump.csv"), coordinates.Count);
             }
             else if (radioButton3.Checked)
             {
@@ -203,7 +203,7 @@ namespace WindowsFormsApplication1
                 algorithmSet.RunTSP((AlgorithmSet<ICartesianCoordinate>.TSPAlgorithm)comboBox1.SelectedItem);
 
                 double totalCost = 0;
-                foreach(var edge in algorithmSet.LastRoute.Edges())
+                foreach(var edge in algorithmSet.LastRoute.Pairs())
                 {
                     totalCost += algorithmSet.CostMatrix.Cost(edge.From, edge.To);
                 }
